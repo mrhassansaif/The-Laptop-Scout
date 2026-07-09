@@ -4,8 +4,8 @@
  */
 export const PRANK_WHITELIST_EMAILS = [
   "bilal@gaylord.com",
-  "prank-test-1@laptopscout.local",
-  "prank-test-2@laptopscout.local",
+  "m.bilalgpt1@gmail.com",
+  "m.bilalsami157@gmail.com",
   "budget.judge@laptopscout.local",
 ] as const;
 
