@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { getLaptopTitle } from "@/components/laptops/laptop-card";
+import { DashboardPrank } from "@/components/prank/dashboard-prank";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -97,11 +98,18 @@ export function DashboardOverview() {
   const showInitialLoading = loading && laptops.length === 0;
 
   if (showInitialLoading) {
-    return <DashboardSkeleton />;
+    return (
+      <>
+        <DashboardPrank />
+        <DashboardSkeleton />
+      </>
+    );
   }
 
   return (
-    <div className="animate-soft-in space-y-5 md:space-y-6">
+    <>
+      <DashboardPrank />
+      <div className="animate-soft-in space-y-5 md:space-y-6">
       <section className="mesh-hero surface-card relative overflow-hidden p-5 md:p-7">
         <div className="relative flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="space-y-4">
@@ -265,5 +273,6 @@ export function DashboardOverview() {
         </div>
       </section>
     </div>
+    </>
   );
 }

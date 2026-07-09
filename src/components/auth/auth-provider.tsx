@@ -23,6 +23,7 @@ import {
   signOutUser,
   subscribeToAuthState,
 } from "@/lib/firebase/auth";
+import { clearAllPrankLoginSessions } from "@/lib/prank/session";
 
 type AuthContextValue = {
   user: User | null;
@@ -63,6 +64,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const unsubscribe = subscribeToAuthState((nextUser) => {
+      if (!nextUser) {
+        clearAllPrankLoginSessions();
+      }
+
       setUser(nextUser);
       setLoading(false);
     });
@@ -75,6 +80,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    clearAllPrankLoginSessions();
     await signOutUser();
   }, []);
 
