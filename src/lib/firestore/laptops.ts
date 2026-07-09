@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   query,
   serverTimestamp,
@@ -91,6 +93,11 @@ export async function createLaptop(
 
   const docRef = await addDoc(collection(db, LAPTOPS_COLLECTION), payload);
   return docRef.id;
+}
+
+export async function deleteLaptop(laptopId: string): Promise<void> {
+  const db = getFirebaseFirestore();
+  await deleteDoc(doc(db, LAPTOPS_COLLECTION, laptopId));
 }
 
 /** Shared laptop list for all authenticated users (no userId filter). */

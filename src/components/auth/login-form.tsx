@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircle, ArrowRight, Laptop, ShieldCheck } from "lucide-react";
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import loginBackground from "@/components/assets/lapback.jpeg";
 
 function FirebaseConfigAlert() {
   const { missingEnvVars, connection } = useAuth();
@@ -98,14 +100,22 @@ export function LoginForm() {
 
   return (
     <div className="relative flex min-h-dvh items-center justify-center px-4 py-8">
-      <div className="absolute top-4 right-4">
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
+        <Image
+          src={loginBackground}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px]" />
+      </div>
+
+      <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
       </div>
-      <div
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,color-mix(in_oklch,var(--brand)_14%,transparent),transparent)]"
-        aria-hidden
-      />
-      <div className="relative w-full max-w-sm space-y-6">
+      <div className="relative z-10 w-full max-w-sm space-y-6">
         <div className="space-y-4 text-center">
           <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-brand text-brand-foreground shadow-[0_12px_32px_color-mix(in_oklch,var(--brand)_35%,transparent)]">
             <Laptop className="size-7" />
@@ -124,7 +134,7 @@ export function LoginForm() {
           </div>
         </div>
 
-        <Card className="surface-card border-border/60">
+        <Card className="surface-card border-border/60 bg-card/95 backdrop-blur-md">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl">Welcome back</CardTitle>
             <CardDescription>

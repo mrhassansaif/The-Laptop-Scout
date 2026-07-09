@@ -77,6 +77,18 @@ export function formatVisitDateShort(date: Date): string {
   });
 }
 
+export function formatVisitDateShortFromKey(visitDate: string): string {
+  return formatVisitDateShort(parseVisitDateKey(visitDate));
+}
+
+export function formatVisitFilterLabel(
+  visitDate: string,
+  laptopCount: number,
+): string {
+  const countLabel = `${laptopCount} ${laptopCount === 1 ? "laptop" : "laptops"}`;
+  return `${formatVisitDateShortFromKey(visitDate)} • ${countLabel}`;
+}
+
 export function formatVisitDateTimeLabel(
   visitDate: string,
   createdAt: Date,

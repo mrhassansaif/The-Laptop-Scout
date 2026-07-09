@@ -21,6 +21,8 @@ import {
   ChecklistEntryRow,
   ChecklistSectionCard,
 } from "@/components/checklist/checklist-section";
+import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   CHECKLIST_FOOTER,
@@ -89,6 +91,7 @@ function filterChecklistSections(query: string): ChecklistSection[] {
 
 export function ChecklistView() {
   const [query, setQuery] = useState("");
+  const [clearDialogOpen, setClearDialogOpen] = useState(false);
   const [openSectionIds, setOpenSectionIds] = useState<Set<string>>(
     loadOpenSectionIds,
   );
@@ -149,8 +152,15 @@ export function ChecklistView() {
     });
   }
 
+  function handleClearChecklist() {
+    const next = new Set<string>();
+    setCompletedItemIds(next);
+    saveCompletedItemIds(next);
+    setClearDialogOpen(false);
+  }
+
   return (
-    <div className="animate-soft-in space-y-4 pb-4 md:space-y-5">
+    <div className="animate-soft-in space-y-4 pb-28 md:space-y-5 md:pb-4">
       <div className="mesh-hero surface-card p-5 md:p-6">
         <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
           <div className="flex items-start gap-4">
@@ -180,6 +190,17 @@ export function ChecklistView() {
                   style={{ width: `${progress}%` }}
                 />
               </div>
+              {completedCount > 0 ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="hidden w-full md:inline-flex"
+                  onClick={() => setClearDialogOpen(true)}
+                >
+                  Clear Checklist
+                </Button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -241,6 +262,28 @@ export function ChecklistView() {
           />
         </p>
       </footer>
+
+      {completedCount > 0 ? (
+        <div className="fixed inset-x-0 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] z-30 border-t border-border/60 bg-background/90 p-4 backdrop-blur-2xl md:hidden">
+          <Button
+            type="button"
+            variant="outline"
+            className="h-12 w-full"
+            onClick={() => setClearDialogOpen(true)}
+          >
+            Clear Checklist
+          </Button>
+        </div>
+      ) : null}
+
+      <ConfirmDialog
+        open={clearDialogOpen}
+        onOpenChange={setClearDialogOpen}
+        title="Clear checklist?"
+        description="This will uncheck all completed items. Your section expand/collapse state will stay as it is."
+        confirmLabel="Clear Checklist"
+        onConfirm={handleClearChecklist}
+      />
     </div>
   );
 }

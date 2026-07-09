@@ -212,13 +212,21 @@ export function ChecklistEntryRow({
     case "tool":
       return (
         <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-background/70 px-3 py-3 transition-colors duration-200 hover:bg-muted/40">
-          <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-            {entry.href ? (
+          {entry.href ? (
+            <Link
+              href={entry.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${entry.label ?? "tool"} download`}
+              className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground"
+            >
               <Download className="size-4" />
-            ) : (
+            </Link>
+          ) : (
+            <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
               <Search className="size-4" />
-            )}
-          </span>
+            </span>
+          )}
           <div className="min-w-0 flex-1 space-y-1">
             {entry.href ? (
               <Link

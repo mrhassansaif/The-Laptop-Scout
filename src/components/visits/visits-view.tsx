@@ -8,6 +8,10 @@ import { LaptopDetailDialog } from "@/components/laptops/laptop-detail-dialog";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  ALL_VISITS,
+  VisitDateFilter,
+} from "@/components/visits/visit-date-filter";
 import { useUserLaptops } from "@/hooks/use-user-laptops";
 import type { LaptopRecord } from "@/lib/types";
 import {
@@ -15,20 +19,12 @@ import {
   groupLaptopsByVisitDate,
   pickDefaultVisitDate,
 } from "@/lib/visits";
-import { formatVisitDateLabelFromKey } from "@/lib/visit-dates";
-import { cn } from "@/lib/utils";
-
-const ALL_VISITS = "all";
 
 function VisitsSkeleton() {
   return (
     <div className="space-y-5">
       <Skeleton className="h-36 rounded-2xl" />
-      <div className="flex gap-2 overflow-hidden">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton key={index} className="h-9 w-24 shrink-0 rounded-full" />
-        ))}
-      </div>
+      <Skeleton className="h-12 rounded-xl" />
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {Array.from({ length: 6 }).map((_, index) => (
           <Skeleton key={index} className="h-52 rounded-2xl" />
@@ -83,6 +79,13 @@ export function VisitsView() {
     setDetailOpen(true);
   }
 
+  function handleDetailOpenChange(open: boolean) {
+    setDetailOpen(open);
+    if (!open) {
+      setSelectedLaptop(null);
+    }
+  }
+
   const filterValue = selectedVisitDate ?? ALL_VISITS;
   const showInitialLoading = loading && laptops.length === 0;
 
@@ -133,34 +136,11 @@ export function VisitsView() {
               </div>
             </div>
 
-            <div className="-mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex w-max min-w-full gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedVisitDate(ALL_VISITS)}
-                  className={cn(
-                    "chip",
-                    filterValue === ALL_VISITS ? "chip-active" : "chip-inactive",
-                  )}
-                >
-                  All visits
-                </button>
-                {visitDates.map((visitDate) => (
-                  <button
-                    key={visitDate}
-                    type="button"
-                    onClick={() => setSelectedVisitDate(visitDate)}
-                    className={cn(
-                      "chip",
-                      filterValue === visitDate ? "chip-active" : "chip-inactive",
-                    )}
-                  >
-                    <CalendarDays className="size-3.5 opacity-70" />
-                    {formatVisitDateLabelFromKey(visitDate)}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <VisitDateFilter
+              visitDates={visitDates}
+              value={filterValue}
+              onValueChange={setSelectedVisitDate}
+            />
           </div>
         </section>
 
@@ -206,7 +186,7 @@ export function VisitsView() {
       <LaptopDetailDialog
         laptop={selectedLaptop}
         open={detailOpen}
-        onOpenChange={setDetailOpen}
+        onOpenChange={handleDetailOpenChange}
       />
     </>
   );
