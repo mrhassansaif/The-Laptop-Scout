@@ -10,6 +10,7 @@ import {
   Keyboard,
   MemoryStick,
   MonitorCheck,
+  RotateCcw,
   Search,
   Shield,
   Stethoscope,
@@ -38,6 +39,7 @@ import {
   saveCompletedItemIds,
   saveOpenSectionIds,
 } from "@/lib/checklist/storage";
+import { cn } from "@/lib/utils";
 
 const SECTION_ICONS: Record<string, React.ReactNode> = {
   questions: <Stethoscope className="size-5" />,
@@ -87,6 +89,64 @@ function filterChecklistSections(query: string): ChecklistSection[] {
       items: matchingItems,
     };
   }).filter((section): section is ChecklistSection => section !== null);
+}
+
+type ChecklistStickyControlsProps = {
+  completedCount: number;
+  totalCount: number;
+  progress: number;
+  onClear: () => void;
+};
+
+function ChecklistStickyControls({
+  completedCount,
+  totalCount,
+  progress,
+  onClear,
+}: ChecklistStickyControlsProps) {
+  return (
+    <div
+      className={cn(
+        "sticky top-[53px] z-20 -mx-4 mb-1 border-b border-border/50 bg-background/85 px-4 py-3 backdrop-blur-2xl",
+        "supports-backdrop-filter:bg-background/75",
+        "md:top-0 md:-mx-6 md:rounded-2xl md:border md:border-border/60 md:bg-card/95 md:px-4 md:py-3.5 md:shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_rgba(15,23,42,0.04)]",
+        "dark:md:shadow-[0_0_0_1px_color-mix(in_oklch,var(--foreground)_6%,transparent),0_8px_32px_rgba(0,0,0,0.35)]",
+      )}
+    >
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <div className="min-w-0 flex-1 space-y-2">
+          <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+            <span className="font-medium uppercase tracking-[0.12em]">
+              Progress
+            </span>
+            <span className="font-semibold tabular-nums text-foreground">
+              {completedCount}/{totalCount}
+              <span className="ml-1.5 text-muted-foreground">({progress}%)</span>
+            </span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-full rounded-full bg-brand transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+
+        {completedCount > 0 ? (
+          <Button
+            type="button"
+            variant="outline"
+            className="h-11 w-full shrink-0 bg-background/60 sm:w-auto sm:min-w-[9.5rem]"
+            onClick={onClear}
+          >
+            <RotateCcw className="size-4" />
+            <span className="sm:hidden">Clear</span>
+            <span className="hidden sm:inline">Clear Checklist</span>
+          </Button>
+        ) : null}
+      </div>
+    </div>
+  );
 }
 
 export function ChecklistView() {
@@ -160,48 +220,18 @@ export function ChecklistView() {
   }
 
   return (
-    <div className="animate-soft-in space-y-4 pb-28 md:space-y-5 md:pb-4">
+    <div className="animate-soft-in space-y-4 pb-4 md:space-y-5">
       <div className="mesh-hero surface-card p-5 md:p-6">
-        <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-          <div className="flex items-start gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand text-brand-foreground shadow-[0_8px_24px_color-mix(in_oklch,var(--brand)_30%,transparent)]">
-              <BookOpen className="size-5" />
-            </div>
-            <div className="space-y-2">
-              <h2 className="text-title">Laptop check-up guide</h2>
-              <p className="text-subtitle max-w-2xl">
-                Questions to ask, commands to run, screen tests to open, and
-                tools to verify the laptop before you buy.
-              </p>
-            </div>
+        <div className="flex items-start gap-4">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand text-brand-foreground shadow-[0_8px_24px_color-mix(in_oklch,var(--brand)_30%,transparent)]">
+            <BookOpen className="size-5" />
           </div>
-
-          <div className="w-full md:max-w-xs">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Items completed</span>
-                <span className="font-medium tabular-nums text-foreground">
-                  {completedCount}/{checkableEntryIds.length}
-                </span>
-              </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full rounded-full bg-brand transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              {completedCount > 0 ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="hidden w-full md:inline-flex"
-                  onClick={() => setClearDialogOpen(true)}
-                >
-                  Clear Checklist
-                </Button>
-              ) : null}
-            </div>
+          <div className="space-y-2">
+            <h2 className="text-title">Laptop check-up guide</h2>
+            <p className="text-subtitle max-w-2xl">
+              Questions to ask, commands to run, screen tests to open, and
+              tools to verify the laptop before you buy.
+            </p>
           </div>
         </div>
 
@@ -215,6 +245,13 @@ export function ChecklistView() {
           />
         </div>
       </div>
+
+      <ChecklistStickyControls
+        completedCount={completedCount}
+        totalCount={checkableEntryIds.length}
+        progress={progress}
+        onClear={() => setClearDialogOpen(true)}
+      />
 
       {filteredSections.length === 0 ? (
         <div className="surface-inset px-4 py-10 text-center">
@@ -262,19 +299,6 @@ export function ChecklistView() {
           />
         </p>
       </footer>
-
-      {completedCount > 0 ? (
-        <div className="fixed inset-x-0 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] z-30 border-t border-border/60 bg-background/90 p-4 backdrop-blur-2xl md:hidden">
-          <Button
-            type="button"
-            variant="outline"
-            className="h-12 w-full"
-            onClick={() => setClearDialogOpen(true)}
-          >
-            Clear Checklist
-          </Button>
-        </div>
-      ) : null}
 
       <ConfirmDialog
         open={clearDialogOpen}
