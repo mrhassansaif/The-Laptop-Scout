@@ -20,7 +20,8 @@ Buying a used laptop can be exhausting.
 
 You're checking the CPU, RAM, storage, battery, display, GPU, ports, temperatures, PowerShell commands, benchmarks, price...
 
-Eventually, **dimaag ki dahi ho jati hai.** 😂
+Eventually, **dimaag ki dahi ho jati hai.** 😂 <br />
+<i>(For my English-only peeps: basically, your brain turns to mush.😂)</i>
 
 A couple of years ago, during one of those *"I should probably be sleeping right now"* nights, boredom and insomnia teamed up and I built **[LaptopScout](https://github.com/mrhassansaif/LaptopScout)** — a small React + Vite project to keep useful laptop-buying checks and information in one place.
 
