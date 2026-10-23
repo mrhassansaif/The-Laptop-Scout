@@ -27,7 +27,7 @@ A couple of years ago, during one of those *"I should probably be sleeping right
 
 Fast-forward to today: I finally had the time and motivation to give that old project the glow-up it deserved.
 
-**TheLaptopScout** is a complete revamp of the original idea — rebuilt with a modern stack, better architecture, a mobile-first UI, automatic visit tracking, Firestore, and a much more polished design.
+**TheLaptopScout** is a complete revamp of the original idea — rebuilt with a modern stack, better architecture, a mobile-first UI, automatic visit tracking, Firestore, Light/Dark mode, and a much more polished design.
 
 Basically:
 
@@ -39,13 +39,29 @@ Basically:
 
 TheLaptopScout keeps the entire laptop-hunting process in one place.
 
-* 📋 **Laptop Buying Checklist** — Check hardware, software, battery, display, ports, benchmarks and more.
+* 📋 **Laptop Buying Checklist** — Check hardware, software, battery, display, ports, benchmarks and more. Progress stays sticky on mobile, and there's a Clear Checklist action when you want a fresh start.
 * 💻 **Add Laptop** — Save laptop name, price, details, shop number and shopkeeper information.
 * 📅 **Automatic Visits** — Entries are automatically grouped by the date they were added.
-* 🗂️ **Visit History** — Browse previous visits and everything recorded during them.
-* 🖼️ **Beautiful Cards** — Review saved laptops without digging through giant tables.
+* 🗂️ **Visit History** — Browse previous visits, filter by visit date, and open laptop detail cards without digging through giant tables.
 * 🌗 **Dark / Light Mode** — Pick your preferred theme.
-* 📱 **Mobile First** — Designed for actually using it while standing inside a laptop shop.
+* 📱 **Mobile First** — Responsive layouts for phone and desktop, including sticky headers, bottom navigation, and a sticky Save Laptop action on Add Laptop.
+* 🔐 **Session login** — Auth uses browser-session persistence. Refreshing or navigating around should keep you signed in; ending that tab/window session is intended to require signing in again. Exact browser behavior can vary a bit.
+
+---
+
+### 🚪 The "Oops, We Forgot to Log Out" Button
+
+I go laptop hunting with my friend. Sometimes we get deep into checking machines, arguing about prices, chatting with shopkeepers… and then we walk out without logging out of the app.
+
+Obviously, I don't want the next shopkeeper who gets hold of that laptop or browser to open TheLaptopScout and casually read our saved entries and shopping notes.
+
+So I added an admin-only **Force Logout All Sessions** button.
+
+It asks for confirmation first. When an authorized admin confirms it, signed-in LaptopScout sessions should lose access across devices — including the admin who pressed the button. Online sessions are meant to notice the revocation, bounce back to the sign-in screen, and require signing in again.
+
+### Yes. We built a whole security feature because two people occasionally forget to tap Logout. 😂
+
+This is wired up and the dependency fix for it has passed local tests, lint, and build. A successful live cross-device logout still needs a proper production check, so treat that part as "works in theory, verify in the wild."
 
 ---
 
@@ -75,7 +91,7 @@ TheLaptopScout keeps the entire laptop-hunting process in one place.
 
 Want to run your own version?
 
-Clone or fork the repository, connect your own Firebase project, add your own `.env.local`, and you're good to go.
+Clone or fork the repository, connect **your own** Firebase project, add your own `.env.local` (use the example env files as a guide — never commit real keys), and you're good to go.
 
 You can freely:
 
@@ -93,7 +109,7 @@ If you build something cool with it, I'd love to see it.
 
 ## 🔮 What's Next?
 
-The next feature I'm thinking about is **📸 Image Uploads for Laptop Entries**.
+Still under consideration: **📸 Image Uploads for Laptop Entries** (not built yet).
 
 Imagine saving:
 

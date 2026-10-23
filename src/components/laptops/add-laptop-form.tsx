@@ -150,7 +150,7 @@ export function AddLaptopForm() {
 
   return (
     <form
-      className="animate-soft-in space-y-4 pb-[4.75rem] md:space-y-5 md:pb-0 [&_input]:scroll-mb-32 [&_textarea]:scroll-mb-32"
+      className="animate-soft-in space-y-4 pb-[var(--app-mobile-sticky-save-offset)] md:space-y-5 md:pb-0 [&_input]:scroll-mb-[calc(var(--app-mobile-nav-offset)+var(--app-mobile-sticky-save-offset))] [&_textarea]:scroll-mb-[calc(var(--app-mobile-nav-offset)+var(--app-mobile-sticky-save-offset))]"
       noValidate
       onSubmit={(event) => {
         event.preventDefault();

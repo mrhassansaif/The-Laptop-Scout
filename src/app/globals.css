@@ -55,6 +55,8 @@
   --radius: 0.875rem;
   --app-mobile-header-offset: calc(3.5rem + env(safe-area-inset-top, 0px));
   --app-mobile-nav-offset: calc(4.25rem + env(safe-area-inset-bottom, 0px));
+  /* Fixed Save bar: py-3 + h-12 + border + breathing room above the bar */
+  --app-mobile-sticky-save-offset: 5.75rem;
   --background: oklch(0.978 0.006 265);
   --foreground: oklch(0.17 0.02 265);
   --card: oklch(0.995 0.004 265);
