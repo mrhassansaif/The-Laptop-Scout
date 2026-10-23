@@ -57,7 +57,7 @@ export function ChecklistEntryRow({
           ) : null}
           <p
             className={cn(
-              "text-sm leading-6 transition-all duration-200",
+              "min-w-0 flex-1 text-sm leading-6 break-words transition-colors duration-200",
               completed && "text-muted-foreground line-through",
             )}
           >
@@ -81,11 +81,11 @@ export function ChecklistEntryRow({
               label={entry.label ?? entry.text ?? "Checklist item"}
             />
           ) : null}
-          <div className="space-y-1">
+          <div className="min-w-0 flex-1 space-y-1">
             {entry.label ? (
               <p
                 className={cn(
-                  "text-sm font-medium transition-all duration-200",
+                  "text-sm font-medium break-words transition-colors duration-200",
                   completed && "text-muted-foreground line-through",
                 )}
               >
@@ -95,7 +95,7 @@ export function ChecklistEntryRow({
             {entry.text ? (
               <p
                 className={cn(
-                  "text-sm leading-6 text-muted-foreground transition-all duration-200",
+                  "text-sm leading-6 break-words text-muted-foreground transition-colors duration-200",
                   completed && "line-through opacity-80",
                 )}
               >
@@ -110,14 +110,14 @@ export function ChecklistEntryRow({
       return (
         <div className="flex gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 px-3 py-3">
           <Lightbulb className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" />
-          <div className="space-y-1">
+          <div className="min-w-0 space-y-1">
             {entry.label ? (
-              <p className="text-sm font-medium text-amber-950 dark:text-amber-100">
+              <p className="text-sm font-medium break-words text-amber-950 dark:text-amber-100">
                 {entry.label}
               </p>
             ) : null}
             {entry.text ? (
-              <p className="text-sm leading-6 text-amber-900/80 dark:text-amber-100/80">
+              <p className="text-sm leading-6 break-words text-amber-900/80 dark:text-amber-100/80">
                 {entry.text}
               </p>
             ) : null}
@@ -128,9 +128,12 @@ export function ChecklistEntryRow({
     case "shortcut":
       return (
         <div className="flex flex-col gap-2 rounded-xl border border-border/60 bg-background/70 px-3 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm font-medium">{entry.label}</p>
-          <Badge variant="secondary" className="font-mono text-xs">
-            {entry.command}
+          <p className="min-w-0 text-sm font-medium break-words">{entry.label}</p>
+          <Badge
+            variant="secondary"
+            className="h-auto max-w-full py-1 font-mono text-xs whitespace-normal"
+          >
+            <span className="break-all">{entry.command}</span>
           </Badge>
         </div>
       );
@@ -277,7 +280,7 @@ export function ChecklistSectionCard({
   return (
     <details
       className={cn(
-        "group surface-raised overflow-hidden transition-transform duration-200 hover:-translate-y-0.5",
+        "group surface-raised overflow-hidden transition-transform duration-200 md:hover:-translate-y-0.5",
         className,
       )}
       open={open}

@@ -14,8 +14,10 @@ export function PageHeader({ title, description, eyebrow, action }: PageHeaderPr
             {eyebrow}
           </p>
         ) : null}
-        <h1 className="text-display text-foreground">{title}</h1>
-        {description ? <p className="text-subtitle max-w-2xl">{description}</p> : null}
+        <h1 className="text-display text-balance text-foreground">{title}</h1>
+        {description ? (
+          <p className="text-subtitle max-w-2xl text-pretty">{description}</p>
+        ) : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>

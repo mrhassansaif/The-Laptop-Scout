@@ -43,11 +43,11 @@ export function LaptopCard({
       type="button"
       onClick={() => onSelect(laptop)}
       className={cn(
-        "group w-full rounded-2xl text-left outline-none transition-transform duration-200 focus-visible:ring-4 focus-visible:ring-ring/15 active:scale-[0.98]",
+        "group w-full min-w-0 rounded-2xl text-left outline-none transition-transform duration-200 focus-visible:ring-4 focus-visible:ring-ring/30 active:scale-[0.98]",
         className,
       )}
     >
-      <article className="wallet-card relative overflow-hidden rounded-2xl border border-border/60 p-4 shadow-[0_8px_30px_rgba(15,23,42,0.08)] transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand/25 group-hover:shadow-[0_16px_40px_rgba(15,23,42,0.12)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+      <article className="wallet-card relative overflow-hidden rounded-2xl border border-border/60 p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)] transition-[border-color,box-shadow,transform] duration-200 md:group-hover:-translate-y-0.5 md:group-hover:border-brand/25 md:group-hover:shadow-[0_14px_32px_rgba(15,23,42,0.1)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
         <div
           className={cn(
             "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-90",
@@ -56,10 +56,10 @@ export function LaptopCard({
         />
         <div className="relative flex items-start justify-between gap-3">
           <div className="min-w-0 space-y-1">
-            <p className="line-clamp-2 text-base font-semibold leading-snug tracking-[-0.03em]">
+            <p className="line-clamp-2 text-base font-semibold leading-snug tracking-[-0.03em] break-words">
               {title}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs leading-5 text-muted-foreground">
               {formatVisitDateTimeLabel(laptop.visitDate, laptop.createdAt)}
             </p>
           </div>
@@ -68,32 +68,35 @@ export function LaptopCard({
           </div>
         </div>
 
-        <div className="relative mt-5 flex flex-wrap items-center gap-2">
+        <div className="relative mt-4 flex flex-wrap items-center gap-2">
           {price ? (
-            <Badge className="gap-1 border-0 bg-brand text-brand-foreground">
+            <Badge className="h-auto max-w-full gap-1 border-0 bg-brand py-1 whitespace-normal text-brand-foreground">
               <Tag className="size-3" />
-              {price}
+              <span className="break-words">{price}</span>
             </Badge>
           ) : null}
           {laptop.shopNumber ? (
-            <Badge variant="outline" className="gap-1 bg-background/50 backdrop-blur-sm">
-              <Store className="size-3" />
-              Shop {laptop.shopNumber}
+            <Badge
+              variant="outline"
+              className="h-auto max-w-full gap-1 bg-background/50 py-1 whitespace-normal backdrop-blur-sm"
+            >
+              <Store className="size-3 shrink-0" />
+              <span className="break-words">Shop {laptop.shopNumber}</span>
             </Badge>
           ) : null}
         </div>
 
         {laptop.details ? (
-          <p className="relative mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">
+          <p className="relative mt-3 line-clamp-2 text-sm leading-6 break-words text-muted-foreground">
             {laptop.details}
           </p>
         ) : (
-          <p className="relative mt-4 text-sm text-muted-foreground/75">
+          <p className="relative mt-3 text-sm text-muted-foreground/80">
             Tap to review the saved details.
           </p>
         )}
 
-        <div className="relative mt-5 flex items-center justify-end border-t border-border/50 pt-3">
+        <div className="relative mt-4 flex items-center justify-end border-t border-border/50 pt-3">
           <ChevronRight className="size-4 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:text-foreground" />
         </div>
       </article>

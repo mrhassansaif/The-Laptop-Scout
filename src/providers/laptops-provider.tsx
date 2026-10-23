@@ -13,6 +13,8 @@ import {
   extractVisitDates,
   subscribeLaptops,
 } from "@/lib/firestore/laptops";
+import { SESSION_REVOKED_NOTICE } from "@/lib/session/revocation";
+import { isPermissionDenied } from "@/lib/session/session-control";
 import type { LaptopRecord } from "@/lib/types";
 
 type LaptopsContextValue = {
@@ -25,8 +27,8 @@ type LaptopsContextValue = {
 const LaptopsContext = createContext<LaptopsContextValue | null>(null);
 
 export function LaptopsProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
-  const isAuthenticated = Boolean(user);
+  const { user, access, endSessionLocally } = useAuth();
+  const isAuthenticated = access === "granted" && Boolean(user);
   const [laptops, setLaptops] = useState<LaptopRecord[]>([]);
   const [hasSnapshot, setHasSnapshot] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,6 +55,13 @@ export function LaptopsProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
+        if (isPermissionDenied(subscriptionError)) {
+          setLaptops([]);
+          setError(null);
+          endSessionLocally(SESSION_REVOKED_NOTICE);
+          return;
+        }
+
         setError(subscriptionError.message);
         setHasSnapshot(true);
       },
@@ -62,7 +71,7 @@ export function LaptopsProvider({ children }: { children: React.ReactNode }) {
       active = false;
       unsubscribe();
     };
-  }, [isAuthenticated]);
+  }, [endSessionLocally, isAuthenticated]);
 
   const value = useMemo((): LaptopsContextValue => {
     const visibleLaptops = isAuthenticated ? laptops : [];

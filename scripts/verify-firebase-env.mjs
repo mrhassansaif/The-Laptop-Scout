@@ -70,6 +70,26 @@ for (const key of REQUIRED) {
   console.log(`  ${key}=${preview}`);
 }
 
+const ADMIN = [
+  "FIREBASE_ADMIN_PROJECT_ID",
+  "FIREBASE_ADMIN_CLIENT_EMAIL",
+  "FIREBASE_ADMIN_PRIVATE_KEY",
+];
+
+console.log("\nFirebase Admin variables (values are not printed):");
+for (const key of ADMIN) {
+  console.log(`  ${key}: ${env[key]?.trim() ? "present" : "missing"}`);
+}
+
+const revokeRefreshTokens =
+  env.FIREBASE_ADMIN_REVOKE_REFRESH_TOKENS?.trim().toLowerCase() === "true";
+console.log(
+  `  FIREBASE_ADMIN_REVOKE_REFRESH_TOKENS: ${revokeRefreshTokens ? "enabled" : "off"}`,
+);
+
 console.log(
   "\nNote: restart `npm run dev` after changing .env.local so Next.js reloads env vars.",
+);
+console.log(
+  "Publish firestore.rules separately. Saving the file does not update the Firebase project.",
 );

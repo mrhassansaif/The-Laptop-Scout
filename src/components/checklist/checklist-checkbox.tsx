@@ -23,10 +23,10 @@ export function ChecklistCheckbox({
       aria-label={label}
       onClick={() => onChange(!checked)}
       className={cn(
-        "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border-2 transition-all duration-200",
+        "relative mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors duration-200 before:absolute before:-inset-3 before:content-['']",
         checked
           ? "animate-check-pop border-brand bg-brand"
-          : "border-border bg-card hover:border-brand/40",
+          : "border-border bg-card",
       )}
     >
       <Check

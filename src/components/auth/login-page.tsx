@@ -6,18 +6,23 @@ import { Loader2 } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
 import { LoginForm } from "@/components/auth/login-form";
+import { SessionUnverified } from "@/components/auth/session-unverified";
 
 export function LoginPage() {
-  const { user, loading } = useAuth();
+  const { access } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (access === "granted") {
       router.replace("/dashboard");
     }
-  }, [loading, user, router]);
+  }, [access, router]);
 
-  if (loading) {
+  if (access === "unverified") {
+    return <SessionUnverified />;
+  }
+
+  if (access === "loading") {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background">
         <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-card px-4 py-3 text-sm text-muted-foreground shadow-sm">
@@ -28,7 +33,7 @@ export function LoginPage() {
     );
   }
 
-  if (user) {
+  if (access === "granted") {
     return null;
   }
 

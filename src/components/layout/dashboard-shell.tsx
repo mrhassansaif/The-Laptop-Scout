@@ -28,8 +28,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
             <div
               className={cn(
-                "flex min-h-dvh flex-1 flex-col transition-[padding] duration-300",
-                sidebarCollapsed ? "md:pl-24" : "md:pl-[17.5rem]",
+                "flex min-h-dvh min-w-0 flex-1 flex-col transition-[padding] duration-300",
+                sidebarCollapsed ? "md:pl-[6.5rem]" : "md:pl-72",
               )}
             >
               <main className="flex-1">{children}</main>

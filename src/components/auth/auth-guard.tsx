@@ -5,18 +5,19 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
+import { SessionUnverified } from "@/components/auth/session-unverified";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { access } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (access === "signed-out") {
       router.replace("/");
     }
-  }, [loading, user, router]);
+  }, [access, router]);
 
-  if (loading) {
+  if (access === "loading") {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background">
         <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-card px-4 py-3 text-sm text-muted-foreground shadow-sm">
@@ -27,7 +28,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (access === "unverified") {
+    return <SessionUnverified />;
+  }
+
+  if (access !== "granted") {
     return null;
   }
 

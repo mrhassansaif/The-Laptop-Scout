@@ -1,9 +1,48 @@
 rules_version = '2';
+
+// Saving this file does not publish it. Deploy it to the Firebase project
+// (Console → Firestore → Rules → Publish, or firebase deploy --only firestore:rules)
+// before a force logout can block existing sessions.
 service cloud.firestore {
   match /databases/{database}/documents {
+    function sessionControlPath() {
+      return /databases/$(database)/documents/system/sessionControl;
+    }
+
+    // auth_time and authTimeCutoff are both Unix seconds.
+    // The server stores cutoff as (trusted server second - 1) so a sign-in
+    // during the revocation second is not left permanently revoked.
+    // A missing control document, or one without authTimeCutoff, allows access.
+    // `is number` matches the whole-second value written by the Admin SDK.
+    function hasValidSession() {
+      return request.auth != null && (
+        !exists(sessionControlPath()) || sessionAllowsAuthTime()
+      );
+    }
+
+    function sessionAllowsAuthTime() {
+      let data = get(sessionControlPath()).data;
+      return !('authTimeCutoff' in data)
+        || (
+          data.authTimeCutoff is number
+          && request.auth.token.auth_time > data.authTimeCutoff
+        );
+    }
+
     match /laptops/{docId} {
-      allow read, create: if request.auth != null;
-      allow update, delete: if request.auth != null;
+      allow read, create, update, delete: if hasValidSession();
+    }
+
+    // Any signed-in client may read the cutoff so it can detect revocation.
+    // Clients, including admins, cannot write it. Only the Admin SDK can.
+    match /system/sessionControl {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    match /admin/{uid} {
+      allow read: if hasValidSession() && request.auth.uid == uid;
+      allow create, update, delete: if false;
     }
   }
 }

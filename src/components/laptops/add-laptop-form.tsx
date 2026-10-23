@@ -150,7 +150,7 @@ export function AddLaptopForm() {
 
   return (
     <form
-      className="animate-soft-in space-y-4 pb-36 md:space-y-5 md:pb-8"
+      className="animate-soft-in space-y-4 pb-[4.75rem] md:space-y-5 md:pb-0 [&_input]:scroll-mb-32 [&_textarea]:scroll-mb-32"
       noValidate
       onSubmit={(event) => {
         event.preventDefault();
@@ -224,7 +224,7 @@ export function AddLaptopForm() {
             />
           </FloatingField>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-5 lg:grid-cols-2">
             <FloatingField
               id="shopNumber"
               label="Shop number"
@@ -291,7 +291,7 @@ export function AddLaptopForm() {
         </div>
       ) : null}
 
-      <div className="fixed inset-x-0 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] z-30 border-t border-border/60 bg-background/90 p-4 backdrop-blur-2xl md:static md:bottom-auto md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+      <div className="fixed inset-x-0 bottom-[var(--app-mobile-nav-offset)] z-30 border-t border-border/70 bg-background/95 px-[max(1rem,env(safe-area-inset-left,0px))] py-3 pr-[max(1rem,env(safe-area-inset-right,0px))] backdrop-blur-xl md:static md:bottom-auto md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
         <Button
           type="submit"
           size="lg"

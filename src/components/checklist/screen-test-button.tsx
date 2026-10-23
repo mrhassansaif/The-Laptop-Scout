@@ -15,7 +15,7 @@ const COLOR_STYLES: Record<
 > = {
   WHITE: {
     swatch: "bg-white ring-1 ring-border",
-    button: "bg-white text-foreground ring-1 ring-border hover:bg-zinc-100",
+    button: "bg-white text-zinc-950 ring-1 ring-border hover:bg-zinc-100",
   },
   GREEN: {
     swatch: "bg-[#7CFC00]",
@@ -55,7 +55,7 @@ export function ScreenTestButton({ color, label, hint }: ScreenTestButtonProps) 
       <Button
         type="button"
         size="sm"
-        className={cn("shrink-0 gap-1.5", styles.button)}
+        className={cn("h-10 shrink-0 gap-1.5 px-3 sm:h-9", styles.button)}
         onClick={() => openScreenTestWindow(color)}
       >
         <ExternalLink className="size-3.5" />

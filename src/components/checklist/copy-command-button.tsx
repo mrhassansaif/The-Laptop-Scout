@@ -29,7 +29,7 @@ export function CopyCommandButton({ value, className }: CopyCommandButtonProps) 
       <Button
         type="button"
         variant="outline"
-        size="icon-sm"
+        size="icon"
         onClick={() => void handleCopy()}
         aria-label={copied ? "Copied" : "Copy command"}
         title={copied ? "Copied!" : "Copy to clipboard"}
@@ -40,11 +40,6 @@ export function CopyCommandButton({ value, className }: CopyCommandButtonProps) 
           <Copy className="size-3.5" />
         )}
       </Button>
-      {copied ? (
-        <span className="absolute -top-9 right-0 z-10 rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-sm">
-          Copied
-        </span>
-      ) : null}
     </div>
   );
 }

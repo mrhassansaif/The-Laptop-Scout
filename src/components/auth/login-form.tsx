@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { AlertCircle, ArrowRight, Laptop, ShieldCheck } from "lucide-react";
 
 import { useAuth } from "@/components/auth/auth-provider";
@@ -70,8 +69,7 @@ function FirebaseConfigAlert() {
 }
 
 export function LoginForm() {
-  const { signIn, configured, connection } = useAuth();
-  const router = useRouter();
+  const { signIn, configured, connection, sessionNotice } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -90,7 +88,6 @@ export function LoginForm() {
 
     try {
       await signIn(email, password);
-      router.replace("/dashboard");
     } catch {
       setError("Unable to sign in. Check your email and password.");
     } finally {
@@ -99,7 +96,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="relative flex min-h-dvh items-center justify-center px-4 py-8">
+    <div className="relative flex min-h-dvh flex-col overflow-x-clip">
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <Image
           src={loginBackground}
@@ -112,22 +109,27 @@ export function LoginForm() {
         <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px]" />
       </div>
 
-      <div className="absolute top-4 right-4 z-20">
-        <ThemeToggle />
+      <div className="fixed top-[max(1rem,env(safe-area-inset-top,0px))] right-[max(1rem,env(safe-area-inset-right,0px))] z-20 rounded-full border border-white/20 bg-background/90 shadow-sm">
+        <ThemeToggle size="icon" />
       </div>
-      <div className="relative z-10 w-full max-w-sm space-y-6">
-        <div className="space-y-4 text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-sm flex-1 flex-col justify-center space-y-6 px-4 pt-[max(4.75rem,calc(env(safe-area-inset-top,0px)+3.75rem))] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))]">
+        <div className="space-y-4 text-center text-white">
           <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-brand text-brand-foreground shadow-[0_12px_32px_color-mix(in_oklch,var(--brand)_35%,transparent)]">
             <Laptop className="size-7" />
           </div>
           <div className="space-y-2">
-            <Badge variant="outline" className="mx-auto gap-1.5 border-brand/25">
-              <ShieldCheck className="size-3 text-brand" />
+            <Badge
+              variant="outline"
+              className="mx-auto gap-1.5 border-white/30 bg-white/10 text-white"
+            >
+              <ShieldCheck className="size-3 text-white" />
               Secure field tracker
             </Badge>
             <div>
-              <h1 className="text-display text-3xl">LaptopScout</h1>
-              <p className="text-subtitle mt-2">
+              <h1 className="text-display text-3xl text-balance text-white">
+                LaptopScout
+              </h1>
+              <p className="mt-2 text-sm leading-6 text-white/80 text-pretty sm:text-[0.9375rem]">
                 Sign in to manage visits, laptop finds, and buyer checklists.
               </p>
             </div>
@@ -143,6 +145,15 @@ export function LoginForm() {
           </CardHeader>
           <CardContent className="space-y-4">
             <FirebaseConfigAlert />
+
+            {sessionNotice ? (
+              <p
+                className="rounded-xl border border-border bg-muted px-3 py-2 text-sm text-foreground"
+                role="status"
+              >
+                {sessionNotice}
+              </p>
+            ) : null}
 
             {canSignIn ? (
               <form className="space-y-4" onSubmit={handleSubmit}>

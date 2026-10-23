@@ -25,7 +25,7 @@ function VisitsSkeleton() {
     <div className="space-y-5">
       <Skeleton className="h-36 rounded-2xl" />
       <Skeleton className="h-12 rounded-xl" />
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
         {Array.from({ length: 6 }).map((_, index) => (
           <Skeleton key={index} className="h-52 rounded-2xl" />
         ))}
@@ -151,10 +151,10 @@ export function VisitsView() {
               className="space-y-3"
               style={{ animationDelay: `${groupIndex * 80}ms` }}
             >
-              <div className="sticky top-[53px] z-20 -mx-4 border-y border-border/50 bg-background/80 px-4 py-2.5 backdrop-blur-2xl md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-base font-semibold tracking-[-0.03em] md:text-lg">
+              <div className="sticky top-[var(--app-mobile-header-offset)] z-20 -mx-4 border-y border-border/60 bg-background/95 px-4 py-2.5 backdrop-blur-xl md:static md:mx-0 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                  <div className="min-w-0">
+                    <h3 className="text-base font-semibold tracking-[-0.03em] text-balance md:text-lg">
                       {group.label}
                     </h3>
                     <p className="text-xs text-muted-foreground md:text-sm">
@@ -168,7 +168,7 @@ export function VisitsView() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
                 {group.laptops.map((laptop, index) => (
                   <LaptopCard
                     key={laptop.id}

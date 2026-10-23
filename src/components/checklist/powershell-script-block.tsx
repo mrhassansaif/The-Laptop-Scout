@@ -12,7 +12,7 @@ export function PowershellScriptBlock() {
         </p>
         <CopyCommandButton value={WINSAT_POWERSHELL_SCRIPT} />
       </div>
-      <pre className="overflow-x-auto rounded-lg bg-zinc-950 px-3 py-3 text-xs leading-relaxed text-zinc-100">
+      <pre className="max-w-full overflow-x-auto rounded-lg bg-zinc-950 px-3 py-3 text-xs leading-relaxed text-zinc-100">
         <code>{WINSAT_POWERSHELL_SCRIPT.trim()}</code>
       </pre>
     </div>

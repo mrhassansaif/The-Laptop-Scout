@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 type ThemeToggleProps = {
   className?: string;
+  size?: "icon" | "icon-sm";
 };
 
 function subscribeToHydration() {
@@ -23,7 +24,7 @@ function getServerHydrationSnapshot() {
   return false;
 }
 
-export function ThemeToggle({ className }: ThemeToggleProps) {
+export function ThemeToggle({ className, size = "icon-sm" }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useSyncExternalStore(
     subscribeToHydration,
@@ -35,7 +36,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
     return (
       <Button
         variant="ghost"
-        size="icon-sm"
+        size={size}
         className={cn("text-muted-foreground", className)}
         disabled
         aria-label="Toggle theme"
@@ -48,7 +49,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   return (
     <Button
       variant="ghost"
-      size="icon-sm"
+      size={size}
       className={cn("text-muted-foreground hover:text-foreground", className)}
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}

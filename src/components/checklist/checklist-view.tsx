@@ -107,8 +107,7 @@ function ChecklistStickyControls({
   return (
     <div
       className={cn(
-        "sticky top-[53px] z-20 -mx-4 mb-1 border-b border-border/50 bg-background/85 px-4 py-3 backdrop-blur-2xl",
-        "supports-backdrop-filter:bg-background/75",
+        "sticky top-[var(--app-mobile-header-offset)] z-20 -mx-4 mb-1 border-b border-border/60 bg-background/95 px-4 py-3 backdrop-blur-xl",
         "md:top-0 md:-mx-6 md:rounded-2xl md:border md:border-border/60 md:bg-card/95 md:px-4 md:py-3.5 md:shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_rgba(15,23,42,0.04)]",
         "dark:md:shadow-[0_0_0_1px_color-mix(in_oklch,var(--foreground)_6%,transparent),0_8px_32px_rgba(0,0,0,0.35)]",
       )}
@@ -136,7 +135,7 @@ function ChecklistStickyControls({
           <Button
             type="button"
             variant="outline"
-            className="h-11 w-full shrink-0 bg-background/60 sm:w-auto sm:min-w-[9.5rem]"
+            className="h-11 w-full shrink-0 bg-background sm:w-auto sm:min-w-[9.5rem]"
             onClick={onClear}
           >
             <RotateCcw className="size-4" />

@@ -61,7 +61,7 @@ function StatCard({
   accent: keyof typeof statAccents;
 }) {
   return (
-    <div className="surface-raised group relative overflow-hidden p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_12px_36px_rgba(0,0,0,0.4)]">
+    <div className="surface-raised group relative h-full overflow-hidden p-4 transition-[box-shadow,transform] duration-200 md:hover:-translate-y-0.5 md:hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] dark:md:hover:shadow-[0_12px_28px_rgba(0,0,0,0.32)]">
       <div
         className={cn(
           "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80 transition-opacity duration-200 group-hover:opacity-100",
@@ -70,17 +70,17 @@ function StatCard({
       />
       <div className="relative space-y-2.5">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+          <p className="text-[11px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
             {title}
           </p>
           <div className="flex size-8 items-center justify-center rounded-xl bg-background/80 text-foreground shadow-sm backdrop-blur-sm">
             {icon}
           </div>
         </div>
-        <p className="text-[2rem] font-semibold leading-none tracking-[-0.05em] tabular-nums">
+        <p className="text-[1.75rem] font-semibold leading-none tracking-[-0.05em] tabular-nums sm:text-[2rem]">
           {value}
         </p>
-        <p className="text-xs leading-5 text-muted-foreground">{description}</p>
+        <p className="text-xs leading-5 text-pretty text-muted-foreground">{description}</p>
       </div>
     </div>
   );
@@ -111,7 +111,7 @@ export function DashboardOverview() {
       <DashboardPrank />
       <div className="animate-soft-in space-y-5 md:space-y-6">
       <section className="mesh-hero surface-card relative overflow-hidden p-5 md:p-7">
-        <div className="relative flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             <Badge
               variant="outline"
@@ -121,14 +121,14 @@ export function DashboardOverview() {
               Live scouting workspace
             </Badge>
             <div className="space-y-2">
-              <h2 className="text-display">Welcome back.</h2>
+              <h2 className="text-display text-balance">Welcome back.</h2>
               <p className="text-subtitle max-w-lg">
                 Capture finds in seconds, review visit history, and keep your
                 inspection checklist close while you are in the market.
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2.5 md:min-w-80">
+          <div className="grid grid-cols-2 gap-2.5 lg:min-w-72 xl:min-w-80">
             <Button render={<Link href="/laptops/add" />} className="h-11">
               <Plus className="size-4" />
               Add
@@ -145,7 +145,7 @@ export function DashboardOverview() {
         </div>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <StatCard
           title="Today"
           value={todayCount}
@@ -176,7 +176,7 @@ export function DashboardOverview() {
         />
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[1fr_17rem]">
+      <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_17rem]">
         <div className="surface-card min-w-0 overflow-hidden">
           <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-4 md:px-5">
             <div>
@@ -198,7 +198,7 @@ export function DashboardOverview() {
               recentLaptops.map((laptop, index) => (
                 <div
                   key={laptop.id}
-                  className="animate-fade-up flex items-center justify-between gap-3 rounded-xl border border-border/50 bg-muted/25 px-3 py-3 transition-all duration-200 hover:border-border hover:bg-muted/45"
+                  className="animate-fade-up flex items-center justify-between gap-3 rounded-xl border border-border/50 bg-muted/25 px-3 py-3 transition-colors duration-200 hover:border-border hover:bg-muted/45"
                   style={{ animationDelay: `${index * 60}ms` }}
                 >
                   <div className="flex min-w-0 items-center gap-3">

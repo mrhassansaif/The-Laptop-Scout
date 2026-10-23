@@ -10,8 +10,8 @@ export function MobileBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border/60 bg-background/80 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-2xl md:hidden">
-      <div className="mx-auto flex max-w-lg items-stretch justify-around gap-1">
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border/70 bg-background/95 px-1.5 pt-1.5 pb-[max(0.375rem,env(safe-area-inset-bottom,0px))] shadow-[0_-8px_24px_rgba(15,23,42,0.04)] backdrop-blur-xl md:hidden dark:shadow-[0_-8px_24px_rgba(0,0,0,0.28)]">
+      <div className="mx-auto flex h-14 max-w-lg items-stretch justify-around gap-1">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const isActive =
             pathname === href ||
@@ -22,7 +22,7 @@ export function MobileBottomNav() {
               key={href}
               href={href}
               className={cn(
-                "relative flex min-w-0 flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[10px] font-medium transition-all duration-200",
+                "relative flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-xl px-1 py-1 text-xs font-medium transition-colors duration-200",
                 isActive
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",

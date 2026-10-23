@@ -69,7 +69,7 @@ function MetaTile({
       </div>
       <div className="min-w-0">
         <p className="text-xs text-muted-foreground">{label}</p>
-        <p className="truncate text-sm font-medium">{value}</p>
+        <p className="text-sm font-medium break-words">{value}</p>
       </div>
     </div>
   );
@@ -112,12 +112,12 @@ export function LaptopDetailDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-h-[88dvh] overflow-y-auto border-border/60 bg-card sm:max-w-lg">
-          <DialogHeader className="pr-8">
+        <DialogContent className="border-border/60 bg-card sm:max-w-lg">
+          <DialogHeader>
             <div className="mesh-hero mb-2 flex size-12 items-center justify-center rounded-2xl border border-border/50 text-brand">
               <Laptop className="size-5" />
             </div>
-            <DialogTitle className="text-title text-xl">
+            <DialogTitle className="text-title text-xl text-balance">
               {getLaptopTitle(laptop)}
             </DialogTitle>
             <DialogDescription>
@@ -169,7 +169,7 @@ export function LaptopDetailDialog({
               <Button
                 type="button"
                 variant="destructive"
-                className="w-full"
+                className="h-11 w-full"
                 onClick={() => setConfirmDeleteOpen(true)}
               >
                 <Trash2 className="size-4" />

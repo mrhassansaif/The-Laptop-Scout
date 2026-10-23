@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Laptop, LogOut, PanelLeftClose, PanelLeftOpen, Sparkles } from "lucide-react";
 
+import { ForceLogoutButton } from "@/components/admin/force-logout-button";
 import { useAuth } from "@/components/auth/auth-provider";
 import { NAV_ITEMS } from "@/components/layout/nav-items";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -138,6 +139,7 @@ export function AppSidebar({
             <span className="text-xs text-muted-foreground">Theme</span>
           ) : null}
         </div>
+        <ForceLogoutButton variant="sidebar" collapsed={collapsed} />
         <Button
           variant="ghost"
           className={cn(
