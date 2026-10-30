@@ -298,3 +298,9 @@
     transform: scale(1);
   }
 }
+
+/* Classic bootstrap sets this before React mounts; keep the overlay usable
+   even if the message node was still missing when the head script ran. */
+html[data-browser-supported="0"] #browser-support-message {
+  display: flex !important;
+}
