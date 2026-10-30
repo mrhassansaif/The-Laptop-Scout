@@ -85,6 +85,27 @@ This is wired up and the dependency fix for it has passed local tests, lint, and
 
 ---
 
+## 🌐 Older Browser Support
+
+I wanted TheLaptopScout to work on older laptops and browsers too — because what's the point of a laptop-buying companion if it refuses to open on the laptop you're inspecting? 😂
+
+Because apparently, not everyone is walking around with the latest browser update. And sometimes the laptop you're checking is older than the website you're trying to open. 😭
+
+Configured targets:
+
+* Chromium-based **Microsoft Edge 79+**
+* **Chrome 79+**
+* **Firefox 78+**
+* **Safari 14+**
+
+The project now builds JavaScript for older browser syntax, detects unsupported browsers before the app loads, shows a friendly "please update your browser" message when needed, and includes browser-compatibility / production-bundle checks.
+
+**Not supported:** Legacy Edge (EdgeHTML), Internet Explorer, and anything below those minimums.
+
+Local checks so far: ESLint, production build, 12/12 session tests, 5/5 browser-detection tests, ES2019 bundle syntax checks, and Chromium **79 / 93 / 110** engine smoke tests. That does *not* mean full Firebase Auth / Firestore flows were verified on every old engine — and Firefox / Safari weren't independently smoke-tested here. Field testing still welcome. 🫡
+
+---
+
 ## 🚀 Open Source
 
 **TheLaptopScout is now open source. 🎉**

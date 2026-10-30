@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.browser-binaries/
 
 # debug
 npm-debug.log*

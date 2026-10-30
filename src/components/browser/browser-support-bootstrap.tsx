@@ -1,4 +1,7 @@
-import { BROWSER_SUPPORT_MESSAGE_ID } from "@/lib/browser-support";
+import {
+  APP_BROWSER_BASELINE,
+  BROWSER_SUPPORT_MESSAGE_ID,
+} from "@/lib/browser-support";
 
 /**
  * Loads the classic ES5 bootstrap from /public before React can recover from
@@ -16,6 +19,11 @@ export function BrowserSupportBootstrap() {
 }
 
 export function BrowserSupportMessage() {
+  const edgeMin = APP_BROWSER_BASELINE.edge;
+  const chromeMin = APP_BROWSER_BASELINE.chrome;
+  const firefoxMin = APP_BROWSER_BASELINE.firefox;
+  const safariLabel = `${APP_BROWSER_BASELINE.safari.major}.${APP_BROWSER_BASELINE.safari.minor}+`;
+
   return (
     <div
       id={BROWSER_SUPPORT_MESSAGE_ID}
@@ -28,14 +36,15 @@ export function BrowserSupportMessage() {
         <div className="space-y-2">
           <p className="font-medium text-foreground">Browser update needed</p>
           <p className="leading-6 text-muted-foreground">
-            LaptopScout needs a current browser to load. Next.js 16 requires
-            Microsoft Edge 111+, Chrome 111+, Firefox 111+, or Safari 16.4+.
-            Update Edge (or switch to an up-to-date Chrome), then reload this
-            page.
+            LaptopScout needs a Chromium-based browser to load. Supported:
+            Microsoft Edge {edgeMin}+ (Chromium), Chrome {chromeMin}+, Firefox{" "}
+            {firefoxMin}+, or Safari {safariLabel}. Legacy Microsoft Edge
+            (EdgeHTML) and Internet Explorer are not supported.
           </p>
           <p className="leading-6 text-muted-foreground">
-            If this browser is already up to date, do a hard refresh or clear
-            cached site data for this site and try again.
+            Update to a current Chromium Edge (or Chrome), then reload. If this
+            browser is already new enough, hard-refresh or clear cached site
+            data and try again.
           </p>
         </div>
       </div>

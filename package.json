@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "browserslist": [
-    "chrome 111",
-    "edge 111",
-    "firefox 111",
-    "safari 16.4"
+    "chrome 79",
+    "edge 79",
+    "firefox 78",
+    "safari 14"
   ],
   "scripts": {
     "dev": "next dev",
@@ -14,6 +14,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:session": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/lib/session/revocation.test.ts",
+    "test:compat-syntax": "node scripts/audit-bundle-syntax.mjs",
+    "test:compat-ua": "node --test scripts/compat-ua-gate.test.mjs",
     "verify:firebase-env": "node scripts/verify-firebase-env.mjs"
   },
   "dependencies": {
@@ -44,6 +46,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "puppeteer-core": "^25.16.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
